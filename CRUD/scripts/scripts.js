@@ -8,6 +8,9 @@ const inputPostApellido = document.getElementById('inputPostApellido');
 const btnPost = document.getElementById('btnPost');
 //const modal
 const modalInvalidFeedback = document.getElementById('modal-invalid-feedback');
+// const put
+const inputPutId = document.getElementById('inputPutId');
+const btnPut = document.getElementById('btnPut');
 
 let getUsers = async id => {
     if(id == 0 || ""){
@@ -54,10 +57,10 @@ let appendUsers = users => {
 };
 
 let postUser = async () => {
-    let url = "https://63651a5bf711cb49d1f52f76.mockapi.io/user";
+    let url = "https://63651a5bf711cb49d1f52f76.mockapi.io/users";
     let usuario = {
-        name: inputPostNombre.value,
-        lastname: inputPostApellido.value
+        'name': inputPostNombre.value,
+        'lastname': inputPostApellido.value,
        
     }
     let responsive = await fetch(url, {
@@ -67,21 +70,16 @@ let postUser = async () => {
         },
         body: JSON.stringify(usuario)
     }).then( res => res.json()).catch(errror => {
-        modalInvalidFeedback.classList.add('d-flex');
-        modalInvalidFeedback.classList.remove('d-none');
-    }).then(getUsers(0));
-    
-    // let resultObj = await responsive.json();
-    // if(resultObj.status == 200){
-    //     modalInvalidFeedback.classList.add('d-none');
-    //     modalInvalidFeedback.classList.remove('d-flex')
-    // }else{
-    //     modalInvalidFeedback.classList.add('d-flex');
-    //     modalInvalidFeedback.classList.remove('d-none');
-    // }
+        
+    })
+    getUsers(0)
 }
 
-btnGet1.addEventListener('click', getUsers(inputGetId1.value));
+let putUser = async () => {
+
+};
+
+btnGet1.addEventListener('click', () => getUsers(inputGetId1.value));
 btnPost.addEventListener('click', postUser);
 
 
@@ -92,3 +90,11 @@ let checkInputReg = () => {
         btnPost.disabled = true;
     }
 }
+
+inputPutId.addEventListener('input', () => {
+    if(inputPutId.value){
+        btnPut.disabled = false;
+    }else {
+        btnPut.disabled = true;
+    }
+});
