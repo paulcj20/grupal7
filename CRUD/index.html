@@ -12,9 +12,15 @@
 <body>
 
     <main class="container">
+        
+
         <div class="row">
             <div class="col-12 text-center my-3">
                 <h1>JAP CRUD</h1>
+                <div class="alert alert-danger position-relative col d-none justify-content-between align-items-center" id="modal-invalid-feedback" role="alert">
+                    <h4>Algo salió mal...</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
             </div>
         </div>
         <div class="row">
@@ -30,8 +36,8 @@
                     <div class="col-md-6">
                         <div class="border p-3 my-3 position-relative" id="post-box">
                             <h6>Ingresar nuevo registro</h6>
-                            <input type="text" id="inputPostNombre" class="form-control my-1" placeholder="Nombre">
-                            <input type="text" id="inputPostApellido" class="form-control my-1" placeholder="Apellido">
+                            <input type="text" id="inputPostNombre" class="form-control my-1" oninput="checkInputReg()" placeholder="Nombre">
+                            <input type="text" id="inputPostApellido" class="form-control my-1" oninput="checkInputReg()" placeholder="Apellido">
                             <button id="btnPost" class="btn btn-success position-absolute bottom-0 mb-3" disabled>
                                 Agregar</button>
                         </div>
