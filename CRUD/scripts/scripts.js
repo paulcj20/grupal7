@@ -9,8 +9,8 @@ const btnPost = document.getElementById('btnPost');
 //const modal
 const modalInvalidFeedback = document.getElementById('modal-invalid-feedback');
 
-let getUsers = async () => {
-    if(inputGetId1.value == 0 || ""){
+let getUsers = async id => {
+    if(id == 0 || ""){
         let responsive = await fetch('https://63651a5bf711cb49d1f52f76.mockapi.io/users');
         if(responsive.status == 200){
             let users = await responsive.json();
@@ -54,19 +54,23 @@ let appendUsers = users => {
 };
 
 let postUser = async () => {
-    let url = "https://63651a5bf711cb49d1f52f76.mockapi.io/users";
-    let user = {
+    let url = "https://63651a5bf711cb49d1f52f76.mockapi.io/user";
+    let usuario = {
         name: inputPostNombre.value,
-        lastname: inputPostApellido.value,
-        id: 10
+        lastname: inputPostApellido.value
+       
     }
-    let responsive = fetch(url, {
+    let responsive = await fetch(url, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application.json' 
+            'Content-Type': 'application/json' 
         },
-        body: JSON.stringify(user)
-    }).then( res => res.json())
+        body: JSON.stringify(usuario)
+    }).then( res => res.json()).catch(errror => {
+        modalInvalidFeedback.classList.add('d-flex');
+        modalInvalidFeedback.classList.remove('d-none');
+    }).then(getUsers(0));
+    
     // let resultObj = await responsive.json();
     // if(resultObj.status == 200){
     //     modalInvalidFeedback.classList.add('d-none');
@@ -77,7 +81,7 @@ let postUser = async () => {
     // }
 }
 
-btnGet1.addEventListener('click', getUsers);
+btnGet1.addEventListener('click', getUsers(inputGetId1.value));
 btnPost.addEventListener('click', postUser);
 
 
