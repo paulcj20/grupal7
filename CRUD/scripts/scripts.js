@@ -11,6 +11,14 @@ const modalInvalidFeedback = document.getElementById('modal-invalid-feedback');
 // const put
 const inputPutId = document.getElementById('inputPutId');
 const btnPut = document.getElementById('btnPut');
+// const modal
+const inputNombreModal = document.getElementById('inputPutNombre');
+const inputApellidoModal = document.getElementById('inputPutApellido');
+const btnModalAccept = document.getElementById('btnSendChanges');
+const modal = document.getElementById('dataModal');
+//const borrar
+const inputDelete = document.getElementById('inputDelete');
+const btnDelete = document.getElementById('btnDelete');
 
 let getUsers = async id => {
     if(id == 0 || ""){
@@ -28,7 +36,6 @@ let getUsers = async id => {
         let response = await fetch('https://63651a5bf711cb49d1f52f76.mockapi.io/users/'+inputGetId1.value)
         if(response.ok){
             let user = await response.json();
-            console.log(user);
             let users = [];
             users[users.length] = user;
             modalInvalidFeedback.classList.add('d-none');
@@ -70,9 +77,6 @@ let postUser = async () => {
         getUsers(0);
         modalInvalidFeedback.classList.add('d-none');
         modalInvalidFeedback.classList.remove('d-flex');
-        let result = await response.json();
-        console.log(result);
-
     }else{
         modalInvalidFeedback.classList.add('d-flex');
         modalInvalidFeedback.classList.remove('d-none');
@@ -80,13 +84,62 @@ let postUser = async () => {
     
 }
 
-let putUser = async () => {
-    
+let getPutUser = async () => {
+    modalInvalidFeedback.classList.add('d-none');
+    modalInvalidFeedback.classList.remove('d-flex');
+    let url = "https://63651a5bf711cb49d1f52f76.mockapi.io/users/"+inputPutId.value;
+    let response = await fetch(url); 
+    if(response.ok){
+        let user = await response.json();
+        console.log(user);
+        inputNombreModal.value = user.name;
+        inputApellidoModal.value = user.lastname;
+        btnModalAccept.removeAttribute('disabled');
+    }else{
+        modalInvalidFeedback.classList.add('d-flex');
+        modalInvalidFeedback.classList.remove('d-none');
+    }
 };
+
+let putUser = async () => {
+    let url = "https://63651a5bf711cb49d1f52f76.mockapi.io/users/"+inputPutId.value;
+    let user = {
+        name: inputNombreModal.value,
+        lastname: inputApellidoModal.value,
+        id: inputPutId.value
+    }
+    let response = await fetch(url, {
+        method: 'PUT',
+        headers:{
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(user)
+        
+    });
+    getUsers(0);
+};
+
+let deleteUser = async () => {
+    let url = "https://63651a5bf711cb49d1f52f76.mockapi.io/users/"+inputDelete.value;
+    let response = await fetch(url, {
+        method: 'DELETE',
+    });
+    if(response.ok){
+        modalInvalidFeedback.classList.add('d-none');
+        modalInvalidFeedback.classList.remove('d-flex');
+        getUsers(0);
+    }else{
+        modalInvalidFeedback.classList.add('d-flex');
+        modalInvalidFeedback.classList.remove('d-none');
+    }
+};
+
 
 btnGet1.addEventListener('click', () => getUsers(inputGetId1.value));
 btnPost.addEventListener('click', postUser);
-
+btnPut.addEventListener('click', getPutUser);
+btnModalAccept.addEventListener('click', putUser);
+btnDelete.addEventListener('click', deleteUser);
 
 let checkInputReg = () => {
     if (inputPostNombre.value!="" && inputPostApellido.value != ""){       
@@ -95,6 +148,16 @@ let checkInputReg = () => {
         btnPost.disabled = true;
     }
 }
+
+let checkDeleteDisabled = () => {
+    if(inputDelete.value != 0){
+        btnDelete.disabled = false;
+    }else{
+        btnDelete.disabled = true;   
+    }
+};
+
+
 
 inputPutId.addEventListener('input', () => {
     if(inputPutId.value){

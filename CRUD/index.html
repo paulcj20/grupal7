@@ -13,7 +13,6 @@
 
     <main class="container">
         
-
         <div class="row">
             <div class="col-12 text-center my-3">
                 <h1>JAP CRUD</h1>
@@ -29,14 +28,14 @@
                     <div class="col-md-6">
                         <div class="border p-3 my-3 position-relative" id="get-box">
                             <h6>Buscar registro</h6>
-                            <input type="number" id="inputGet1Id" class="form-control" placeholder="ID a buscar">
+                            <input type="number" id="inputGet1Id" class="form-control" min="0" placeholder="ID a buscar">
                             <button id="btnGet1" class="btn btn-primary position-absolute bottom-0 mb-3">Buscar</button>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="border p-3 my-3 position-relative" id="post-box">
                             <h6>Ingresar nuevo registro</h6>
-                            <input type="text" id="inputPostNombre" class="form-control my-1" oninput="checkInputReg()" placeholder="Nombre">
+                            <input type="text" id="inputPostNombre" class="form-control my-1"  oninput="checkInputReg()" placeholder="Nombre">
                             <input type="text" id="inputPostApellido" class="form-control my-1" oninput="checkInputReg()" placeholder="Apellido">
                             <button id="btnPost" class="btn btn-success position-absolute bottom-0 mb-3" disabled>
                                 Agregar</button>
@@ -47,16 +46,16 @@
                     <div class="col-md-6">
                         <div class="border p-3 my-3 position-relative" id="put-box">
                             <h6>Modificar registro</h6>
-                            <input type="number" id="inputPutId" class="form-control"
+                            <input type="number" id="inputPutId" class="form-control" min="0"
                                 placeholder="ID del registro a modificar">
-                            <button id="btnPut" class="btn btn-warning position-absolute bottom-0 mb-3" disabled>
+                            <button id="btnPut" class="btn btn-warning position-absolute bottom-0 mb-3" data-bs-toggle="modal" data-bs-target="#dataModal"  disabled>
                                 Modificar</button>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="border p-3 my-3 position-relative" id="delete-box">
                             <h6>Eliminar registro</h6>
-                            <input type="number" id="inputDelete" class="form-control" placeholder="ID a eliminar">
+                            <input type="number" id="inputDelete" class="form-control" oninput="checkDeleteDisabled()" min="0" placeholder="ID a eliminar">
                             <button id="btnDelete" class="btn btn-danger position-absolute bottom-0 mb-3" disabled>
                                 Borrar</button>
                         </div>
@@ -87,7 +86,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" id="btnSendChanges" disabled>Guardar</button>
+                    <button type="submit" class="btn btn-primary" id="btnSendChanges" data-bs-dismiss="modal" disabled>Guardar</button>
                 </div>
             </div>
         </div>
