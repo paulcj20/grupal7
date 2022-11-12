@@ -18,7 +18,7 @@
                 <h1>JAP CRUD</h1>
                 <div class="alert alert-danger position-relative col d-none justify-content-between align-items-center" id="modal-invalid-feedback" role="alert">
                     <h4>Algo salió mal...</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <button type="button" id="btn-close-alert" class="btn-close"  aria-label="Close"></button>
                   </div>
             </div>
         </div>
@@ -72,7 +72,7 @@
                 Programar</a> - 2022</p>
         <p class="mb-1">Generado con fines estrictamente educativos.</p>
     </footer>
-    <div class="alert alert-danger fade" id="alert-error" role="alert">
+    <div class="alert alert-danger d-none" id="alert-error" role="alert">
         Algo salió mal...
     </div>
     <div class="modal fade" tabindex="-1" id="dataModal">

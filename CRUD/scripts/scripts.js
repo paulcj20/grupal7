@@ -16,6 +16,7 @@ const inputNombreModal = document.getElementById('inputPutNombre');
 const inputApellidoModal = document.getElementById('inputPutApellido');
 const btnModalAccept = document.getElementById('btnSendChanges');
 const modal = document.getElementById('dataModal');
+const btnCloseAlert = document.getElementById('btn-close-alert');
 //const borrar
 const inputDelete = document.getElementById('inputDelete');
 const btnDelete = document.getElementById('btnDelete');
@@ -91,7 +92,6 @@ let getPutUser = async () => {
     let response = await fetch(url); 
     if(response.ok){
         let user = await response.json();
-        console.log(user);
         inputNombreModal.value = user.name;
         inputApellidoModal.value = user.lastname;
         btnModalAccept.removeAttribute('disabled');
@@ -116,7 +116,14 @@ let putUser = async () => {
         body: JSON.stringify(user)
         
     });
-    getUsers(0);
+    if(response.ok){
+        getUsers(0);
+        modalInvalidFeedback.classList.add('d-none');
+        modalInvalidFeedback.classList.remove('d-flex');
+    }else {
+        modalInvalidFeedback.classList.add('d-flex');
+        modalInvalidFeedback.classList.remove('d-none');
+    }
 };
 
 let deleteUser = async () => {
@@ -133,13 +140,6 @@ let deleteUser = async () => {
         modalInvalidFeedback.classList.remove('d-none');
     }
 };
-
-
-btnGet1.addEventListener('click', () => getUsers(inputGetId1.value));
-btnPost.addEventListener('click', postUser);
-btnPut.addEventListener('click', getPutUser);
-btnModalAccept.addEventListener('click', putUser);
-btnDelete.addEventListener('click', deleteUser);
 
 let checkInputReg = () => {
     if (inputPostNombre.value!="" && inputPostApellido.value != ""){       
@@ -158,7 +158,6 @@ let checkDeleteDisabled = () => {
 };
 
 
-
 inputPutId.addEventListener('input', () => {
     if(inputPutId.value){
         btnPut.disabled = false;
@@ -166,3 +165,15 @@ inputPutId.addEventListener('input', () => {
         btnPut.disabled = true;
     }
 });
+
+btnCloseAlert.addEventListener('click', () => {
+    modalInvalidFeedback.classList.add('d-none');
+    modalInvalidFeedback.classList.remove('d-flex');
+});
+
+btnGet1.addEventListener('click', () => getUsers(inputGetId1.value));
+btnPost.addEventListener('click', postUser);
+btnPut.addEventListener('click', getPutUser);
+btnModalAccept.addEventListener('click', putUser);
+btnDelete.addEventListener('click', deleteUser);
+
